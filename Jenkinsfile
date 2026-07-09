@@ -37,7 +37,7 @@ pipeline {
         docker rm -f springbootapi-container || true
         docker run -d \
           --name springbootapi-container \
-          -p 8080:5000 \
+          -p 5000:5000 \
           springbootapi
         '''
     }
