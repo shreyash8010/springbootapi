@@ -1,12 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        JAVA_HOME = "/usr/lib/jvm/java-21-openjdk-amd64"
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
+    }
+
     stages {
 
-        stage('Clone') {
+        stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/shreyash8010/springbootapi.git'
+                checkout scm
             }
         }
 
@@ -14,13 +18,14 @@ pipeline {
             steps {
                 sh '''
                 java -version
+                javac -version
                 mvn -version
                 mvn clean package -DskipTests
                 '''
             }
         }
 
-        stage('Docker Image') {
+        stage('Docker Build') {
             steps {
                 sh 'docker build -t springbootapi .'
             }
