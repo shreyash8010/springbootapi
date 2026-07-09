@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'JDK21'
-        maven 'Maven3'
-    }
-
     stages {
 
         stage('Clone') {
@@ -17,7 +12,11 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh '''
+                java -version
+                mvn -version
+                mvn clean package -DskipTests
+                '''
             }
         }
 
